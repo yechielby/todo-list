@@ -8,10 +8,10 @@ import { Subscription } from 'rxjs';
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
-export class TodoListComponent implements OnInit ,OnDestroy {
+export class TodoListComponent implements OnInit, OnDestroy {
 
-  public todo: Array<ITodo> = [];
-
+  public todos: Array<ITodo> = [];
+  public idSelected: number = -1;
   private subscription: Subscription = new Subscription();
 
   constructor(private todoService: TodoService) { }
@@ -19,12 +19,17 @@ export class TodoListComponent implements OnInit ,OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.todoService.getTodos().subscribe(data => {
-        this.todo = data;
+        this.todos = data;
       })
     );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  public onTodoClick(todo: ITodo): void {
+    this.idSelected = todo.id;
+    this.todoService.setSelectedTodo(todo);
   }
 }
