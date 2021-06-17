@@ -1,35 +1,25 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TodoService } from '../../services/todo.service';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ITodo } from '../../models/todo.interface';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
-export class TodoListComponent implements OnInit, OnDestroy {
+export class TodoListComponent implements OnInit {
 
-  public todos: Array<ITodo> = [];
-  public idSelected: number = -1;
-  private subscription: Subscription = new Subscription();
+  @Input() todos: Array<ITodo> = [];
+  @Output() onClick = new Subject<ITodo>();
 
-  constructor(private todoService: TodoService) { }
+  public selectedId: number = -1;
 
-  ngOnInit(): void {
-    this.subscription.add(
-      this.todoService.getTodos().subscribe(data => {
-        this.todos = data;
-      })
-    );
-  }
+  constructor() { }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+  ngOnInit(): void { }
 
   public onTodoClick(todo: ITodo): void {
-    this.idSelected = todo.id;
-    this.todoService.setSelectedTodo(todo);
+    this.selectedId = todo.id;
+    this.onClick.next(todo)
   }
 }

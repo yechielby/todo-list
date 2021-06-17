@@ -1,0 +1,20 @@
+<div class="todos-constainer">
+  <div class="list-container">
+    <app-todo-list
+      [todos]="todos"
+      (onClick)="onTodoClick($event)"
+    ></app-todo-list>
+  </div>
+  <div class="todo-container">
+    <app-todo [todo]="todo"></app-todo>
+  </div>
+
+  <button
+    class="add-new-todo-btn"
+    mat-fab
+    color="primary"
+    (click)="openDialog()"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
