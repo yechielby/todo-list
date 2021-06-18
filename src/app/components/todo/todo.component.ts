@@ -18,7 +18,7 @@ export class TodoComponent implements OnInit {
   }
 
   public onCompleteTodo(todo: ITodo): void {
-    todo.isCompleted = true;
+    todo.isCompleted = !todo.isCompleted;
   }
   public onArchiveTodo(todo: ITodo): void {
     todo.isArchived = true;
