@@ -1,7 +1,13 @@
 <form #f="ngForm" (ngSubmit)="onNewTodoSubmit()">
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Todo Name</mat-label>
-    <input matInput ngModel name="title" placeholder="What is your task?S" />
+    <input
+      matInput
+      ngModel
+      name="title"
+      placeholder="What is your task?S"
+      required
+    />
   </mat-form-field>
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Todo Description</mat-label>
@@ -10,11 +16,12 @@
       ngModel
       name="description"
       placeholder="Ex. I need to do..."
+      required
     ></textarea>
   </mat-form-field>
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Choose a end date</mat-label>
-    <input matInput ngModel name="endDate" [matDatepicker]="picker" />
+    <input matInput ngModel name="endDate" [matDatepicker]="picker" required />
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
@@ -24,6 +31,7 @@
     type="submit"
     [disabled]="!f.form.valid"
     class="full-width"
+    mat-dialog-close
   >
     Save
   </button>

@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Form } from '@angular/forms';
+import { NgForm } from '@angular/forms';
+import { v4 as uuidv4 } from 'uuid';
+
+import { ITodo } from '../../models/todo.interface';
+import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'app-new-todo',
@@ -8,15 +12,25 @@ import { Form } from '@angular/forms';
 })
 export class NewTodoComponent implements OnInit {
 
-  @ViewChild('f') from: Form;
+  @ViewChild('f') from: NgForm;
 
-  constructor() { }
+  constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
   }
 
   public onNewTodoSubmit(): void {
-    console.log(this.from)
+    const formValue = this.from.value;
+    const newTodo: ITodo = {
+      "id": uuidv4(),
+      "title": formValue.title,
+      "description": formValue.description,
+      "isCompleted": false,
+      "isArchived": false,
+      "endDate": formValue.endDate,
+    }
+    console.log(newTodo);
+    this.todoService.addNewTodo(newTodo);
   }
 
 }
