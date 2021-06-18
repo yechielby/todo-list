@@ -15,6 +15,13 @@ export class TodoService {
   constructor() { }
 
   public getTodos(): Observable<Array<ITodo>> {
+    if (!this._todosSubject$.value.length) {
+      const todosString = localStorage.getItem('todos');
+      if (todosString) {
+        const todosArray = JSON.parse(todosString);
+        this._todosSubject$.next(todosArray);
+      }
+    }
     return this._todosSubject$.asObservable();
   }
   public getSelectedTodo(): Observable<ITodo> {
@@ -26,6 +33,7 @@ export class TodoService {
 
   public addNewTodo(newTodo: ITodo): void {
     this._todosSubject$.next([newTodo, ...this._todosSubject$.value]);
+    localStorage.setItem('todos', JSON.stringify(this._todosSubject$.value));
   }
 
 }
