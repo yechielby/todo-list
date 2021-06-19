@@ -14,6 +14,8 @@ export class NewTodoComponent implements OnInit {
 
   @ViewChild('f') from: NgForm;
 
+  public minDate: Date = new Date();
+
   constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
@@ -29,7 +31,7 @@ export class NewTodoComponent implements OnInit {
       "isArchived": false,
       "endDate": formValue.endDate,
     }
-    console.log(newTodo);
+    // console.log(newTodo);
     this.todoService.addNewTodo(newTodo);
   }
 

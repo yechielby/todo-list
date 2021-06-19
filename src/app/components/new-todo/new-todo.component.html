@@ -28,12 +28,19 @@
   </mat-form-field>
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Choose a end date</mat-label>
-    <input matInput ngModel name="endDate" [matDatepicker]="picker" required />
+    <input
+      matInput
+      ngModel
+      [min]="minDate"
+      name="endDate"
+      [matDatepicker]="picker"
+      required
+    />
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-    <mat-error *ngIf="f.form.controls.endDate?.invalid"
-      >Date is Required</mat-error
-    >
+    <mat-error *ngIf="f.form.controls.endDate?.invalid">
+      Date is Required
+    </mat-error>
   </mat-form-field>
   <button
     mat-raised-button
