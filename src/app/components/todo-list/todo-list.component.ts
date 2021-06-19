@@ -12,7 +12,7 @@ export class TodoListComponent implements OnInit {
   @Input() todos: Array<ITodo> = [];
   @Output() onClick = new Subject<ITodo>();
 
-  public selectedId: number = -1;
+  public selectedId: string = '';
 
   constructor() { }
 

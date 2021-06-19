@@ -21,23 +21,25 @@ export class TodoContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._subscription.add(
-      this.todoService.getSelectedTodo().subscribe(
-        (date: ITodo) => {
-          this.todo = date;
-        })
-    );
-    this._subscription.add(
-      this.todoService.getTodos().subscribe(data => {
+      this.todoService.getTodos$().subscribe(data => {
         this.todos = data;
       })
     );
   }
+
   ngOnDestroy(): void {
     this._subscription?.unsubscribe();
   }
 
   public onTodoClick(todo: ITodo): void {
-    this.todoService.setSelectedTodo(todo);
+    this.todo = todo;
+  }
+
+  public onTodoAction(action: string): void {
+    this.todoService.onTodoAction(this.todo.id, action);
+    if (action === 'isArchived') {
+      this.todo = null;
+    }
   }
 
   public openDialog(): void {

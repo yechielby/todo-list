@@ -6,7 +6,7 @@
     ></app-todo-list>
   </div>
   <div class="todo-container">
-    <app-todo [todo]="todo"></app-todo>
+    <app-todo [todo]="todo" (onAction)="onTodoAction($event)"></app-todo>
   </div>
 
   <button

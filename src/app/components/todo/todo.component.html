@@ -5,11 +5,11 @@
   </mat-card-header>
   <mat-card-content> </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="onCompleteTodo(todo)">
-      Complete
+    <button mat-raised-button color="primary" (click)="onCompleteTodo()">
+      <span *ngIf="todo.isCompleted">Not </span>Complete
     </button>
-    <button mat-raised-button color="warn" (click)="onArchiveTodo(todo)">
-      Archive
+    <button mat-raised-button color="warn" (click)="onArchiveTodo()">
+      <span *ngIf="todo.isArchived">Not </span>Archive
     </button>
   </mat-card-actions>
 </mat-card>

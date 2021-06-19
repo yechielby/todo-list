@@ -9,31 +9,38 @@ export class TodoService {
 
   private todos: Array<ITodo> = [];
 
-  private _todosSubject$: BehaviorSubject<Array<ITodo>> = new BehaviorSubject(this.todos);
-  private _singleTodoSubject$: BehaviorSubject<ITodo> = new BehaviorSubject(this.todos.length ? this.todos[0] : null);
+  private _todosSubject: BehaviorSubject<Array<ITodo>> = new BehaviorSubject(this.todos);
 
   constructor() { }
 
-  public getTodos(): Observable<Array<ITodo>> {
-    if (!this._todosSubject$.value.length) {
+  public getTodos$(): Observable<Array<ITodo>> {
+    if (!this._todosSubject.value.length) {
       const todosString = localStorage.getItem('todos');
       if (todosString) {
         const todosArray = JSON.parse(todosString);
-        this._todosSubject$.next(todosArray);
+        this._todosSubject.next(todosArray);
       }
     }
-    return this._todosSubject$.asObservable();
+    return this._todosSubject.asObservable();
   }
-  public getSelectedTodo(): Observable<ITodo> {
-    return this._singleTodoSubject$.asObservable();
+
+  private setTodos(todos: Array<ITodo>): void {
+    this._todosSubject.next(todos);
+    localStorage.setItem('todos', JSON.stringify(todos));
   }
-  public setSelectedTodo(todo: ITodo): void {
-    this._singleTodoSubject$.next(todo);
+
+  public onTodoAction(todoId: string, action: string): void {
+    const exitingTodos: Array<ITodo> = this._todosSubject.value;
+    const index = exitingTodos.findIndex(todo => todo.id === todoId);
+    exitingTodos[index][action] = !exitingTodos[index][action];
+    this.setTodos(exitingTodos);
   }
 
   public addNewTodo(newTodo: ITodo): void {
-    this._todosSubject$.next([newTodo, ...this._todosSubject$.value]);
-    localStorage.setItem('todos', JSON.stringify(this._todosSubject$.value));
+    const exitingTodos: Array<ITodo> = this._todosSubject.value;
+    exitingTodos.unshift(newTodo);
+    this.setTodos(exitingTodos);
+    // this._todosSubject$.next([newTodo, ...this._todosSubject$.value]);
   }
 
 }

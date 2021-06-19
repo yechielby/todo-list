@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { ITodo } from '../../models/todo.interface';
 import { TodoService } from '../../services/todo.service';
@@ -11,17 +12,18 @@ import { TodoService } from '../../services/todo.service';
 export class TodoComponent implements OnInit {
 
   @Input() todo: ITodo;
+  @Output() onAction = new Subject<string>();
 
-  constructor(private todoService: TodoService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  public onCompleteTodo(todo: ITodo): void {
-    todo.isCompleted = !todo.isCompleted;
+  public onCompleteTodo(): void {
+    this.onAction.next('isCompleted');
   }
-  public onArchiveTodo(todo: ITodo): void {
-    todo.isArchived = true;
-    this.todoService.setSelectedTodo(null);
+
+  public onArchiveTodo(): void {
+    this.onAction.next('isArchived');
   }
 }
