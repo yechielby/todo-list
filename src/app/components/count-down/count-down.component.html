@@ -1,0 +1,8 @@
+<div class="count-down" *ngIf="dDay">
+  <h3>Time To Finish:</h3>
+  <span>{{ days }}</span> Days <span>{{ hours }}</span
+  >:<span>{{ minutes | number: "2.0-0" }}</span
+  >:<span>{{ seconds | number: "2.0-0" }}</span>
+</div>
+<!-- <h4>{{ _dDay | date: "HH:mm:ss dd/MM/YYYY" }}</h4>
+<h4>{{ dateNew | date: "HH:mm:ss dd/MM/YYYY" }}</h4> -->
